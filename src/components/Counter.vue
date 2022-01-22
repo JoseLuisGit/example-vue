@@ -8,11 +8,18 @@
 <script>
 export default {
 
-    props:['title'],
+    props:{
+        title: String,
+        start: {
+            type: Number,
+            required: false,
+            default: 10
+        }
+    },
     //name:'Hello',
     data(){
         return {
-            counter: 0,
+            counter: this.start,
         }
     },
     methods:{

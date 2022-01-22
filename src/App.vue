@@ -1,7 +1,7 @@
 <template>
   <Counter title="Inicio"/>
 
-   <Counter />
+   <Counter :start="15" />
 </template>
 
 <script>
