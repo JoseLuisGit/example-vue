@@ -2,20 +2,26 @@
   <img src="https://d500.epimg.net/cincodias/imagenes/2016/07/04/lifestyle/1467646262_522853_1467646344_noticia_normal.jpg"/>
   <div class="bg-dark"></div>
   <div class="indecision-container">
-  <input placeholder="Introduzca su pregunta" type="text"/>
-    <p>Recuerda termminar con un signo de interrogacion (?)</p>
+  <input placeholder="Introduzca su pregunta" type="text" v-model="question"/>
+    <p>Recuerda terminar con un signo de interrogacion (?)</p>
     <div>
-        <h2>Sere Millonario</h2>
+        <h2>{{ question }}</h2>
         <h1>Si, no .... Pensando</h1>
     </div>
  </div>
 </template>
-
+ 
 <script>
 export default {
     data(){
         return {
-            counter: 10,
+            question: '',
+        }
+    },
+    watch:{
+        question(value, oldValue){
+            if( !value.includes('?')) return;
+            console.log('Realizar peticion http')
         }
     }
 }
