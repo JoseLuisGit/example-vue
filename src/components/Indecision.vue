@@ -1,12 +1,12 @@
 <template>
-  <img src="https://d500.epimg.net/cincodias/imagenes/2016/07/04/lifestyle/1467646262_522853_1467646344_noticia_normal.jpg"/>
+  <img v-if="image" :src="image" alt="hl"/>
   <div class="bg-dark"></div>
   <div class="indecision-container">
   <input placeholder="Introduzca su pregunta" type="text" v-model="question"/>
     <p>Recuerda terminar con un signo de interrogacion (?)</p>
-    <div>
+    <div v-if="isValidQuestion">
         <h2>{{ question }}</h2>
-        <h1>Si, no .... Pensando</h1>
+        <h1>{{ answer }}</h1>
     </div>
  </div>
 </template>
@@ -15,15 +15,29 @@
 export default {
     data(){
         return {
-            question: '',
+            question: null,
+            answer: null,
+            image: null,
+            isValidQuestion: false
+        }
+    },
+    methods:{
+        async getAnswer(){
+            this.answer = 'Pensando...'
+            const { answer, image } = await fetch('https://yesno.wtf/api').then(r=>r.json());
+
+            this.answer = answer === 'yes'?'Si!': 'No!';
+            this.image = image;
         }
     },
     watch:{
         question(value, oldValue){
+            this.isValidQuestion = false;
             if( !value.includes('?')) return;
-            console.log('Realizar peticion http')
+            this.isValidQuestion = true;
+            this.getAnswer();
         }
-    }
+    }, 
 }
 </script>
 
